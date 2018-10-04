@@ -1,0 +1,29 @@
+{
+  "name": "regrowth",
+  "version": "0.1.0",
+  "description": "Regrowth is a monstrous laboratory experiment in container queries brought to life.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wildhoney/Regrowth.git"
+  },
+  "keywords": [
+    "container queries",
+    "element queries",
+    "container query",
+    "element query",
+    "responsive",
+    "component",
+    "modular",
+    "element"
+  ],
+  "author": "Adam Timberlake <adam.timberlake@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Wildhoney/Regrowth/issues"
+  },
+  "homepage": "https://github.com/Wildhoney/Regrowth#readme"
+}
