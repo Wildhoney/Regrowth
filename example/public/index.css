@@ -1,0 +1,20 @@
+@media container, screen and (max-width: 100px) {
+    div {
+        border: 2px solid red;
+    }
+}
+
+div {
+    border: 2px solid orange;
+    width: 70%;
+    height: 200px;
+    margin: 50px 25px;
+    position: relative;
+}
+
+iframe {
+    border: 1px solid green;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
