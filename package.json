@@ -4,7 +4,8 @@
   "description": "Regrowth is a monstrous laboratory experiment in container queries brought to life.",
   "main": "src/index.js",
   "scripts": {
-    "test": "ava"
+    "test": "ava",
+    "start": "taskfile start"
   },
   "repository": {
     "type": "git",
