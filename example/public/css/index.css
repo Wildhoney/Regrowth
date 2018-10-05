@@ -1,0 +1,9 @@
+section.example {
+    background-color: green;
+}
+
+@media container, screen and (max-width: 100px) {
+    section.example {
+        background-color: red;
+    }
+}
