@@ -9,22 +9,20 @@ function findElements(selector, source = window.document) {
 function findMatchingElements(tree, source = window.document) {
     return tree.flatMap(node => {
         return Array.from(node.cssRules).flatMap(cssRule => {
-            return findElements(cssRule.selectorText, source).flatMap(
-                element => {
-                    !styleMappings.has(element) &&
-                        styleMappings.set(element, {
-                            rules: new Set(),
-                            indices: new Set(),
-                            sheet: node.sheet
-                        });
-                    const styleMapping = styleMappings.get(element);
-                    styleMapping.rules.add({
-                        node,
-                        cssRule
+            return findElements(cssRule.selectorText, source).flatMap(element => {
+                !styleMappings.has(element) &&
+                    styleMappings.set(element, {
+                        rules: new Set(),
+                        indices: new Set(),
+                        sheet: node.sheet
                     });
-                    return element;
-                }
-            );
+                const styleMapping = styleMappings.get(element);
+                styleMapping.rules.add({
+                    node,
+                    cssRule
+                });
+                return element;
+            });
         });
     });
 }
@@ -52,15 +50,11 @@ function handleResize(element, iFrame) {
     map.indices.clear();
 
     Array.from(map.rules).forEach(({ node, cssRule }) => {
-
         if (!iFrame.contentWindow.matchMedia(node.mediaQuery).matches) {
             return null;
         }
 
-        const index = node.sheet.insertRule(
-            cssRule.cssText,
-            node.sheet.cssRules.length
-        );
+        const index = node.sheet.insertRule(cssRule.cssText, node.sheet.cssRules.length);
         map.indices.add(node.sheet.cssRules[index]);
     });
 }
@@ -73,26 +67,21 @@ function createElementContext(element) {
     }
 
     const newIFrame = createIFrame(document.createElement('iframe'));
-    const isElementStatic =
-        !element.style.position || element.style.position === 'static';
+    const isElementStatic = !element.style.position || element.style.position === 'static';
 
     if (isElementStatic) {
         element.style.position = 'relative';
     }
 
     element.appendChild(newIFrame);
-    newIFrame.contentWindow.addEventListener('resize', () =>
-        handleResize(element, newIFrame)
-    );
+    newIFrame.contentWindow.addEventListener('resize', () => handleResize(element, newIFrame));
     return newIFrame;
 }
 
 function parseStyleAST(link) {
     const rules = Array.from(link.sheet.cssRules);
     const mediaRules = rules.filter(
-        rule =>
-            rule instanceof window.CSSMediaRule &&
-            rule.conditionText.startsWith('container')
+        rule => rule instanceof window.CSSMediaRule && rule.conditionText.startsWith('container')
     );
     return mediaRules.map(({ conditionText, cssRules }) => ({
         sheet: link.sheet,
