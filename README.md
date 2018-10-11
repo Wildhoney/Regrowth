@@ -17,7 +17,7 @@
 You use the familiar `@media` rules in your CSS stylesheet &ndash; the only difference is that to make a rule a container query rule, you need to append `container` as a media rule.
 
 ```css
-@media container, screen and (max-width: 256px) {
+@media container and (max-width: 256px) {
     my-element {
         background-color: orange;
     }
