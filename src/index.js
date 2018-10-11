@@ -30,6 +30,7 @@ function findMatchingElements(tree, source = window.document) {
 function createIFrame(iframe) {
     iframe.classList.add('regrowth');
     iframe.style.position = 'absolute';
+    iframe.style.pointerEvents = 'none';
     iframe.style.top = 0;
     iframe.style.left = 0;
     iframe.style.height = '100%';
@@ -59,7 +60,7 @@ function handleResize(element, iFrame) {
     });
 }
 
-function createElementContext(element) {
+function initialiseContext(element) {
     const iFrame = element.querySelector('iframe.regrowth');
 
     if (iFrame) {
@@ -94,7 +95,10 @@ function main() {
     const tags = findElements('link[rel="stylesheet"]');
     const tree = tags.flatMap(parseStyleAST);
     const elements = findMatchingElements(tree);
-    elements.forEach(createElementContext);
+    elements.forEach(element => {
+        const iFrame = initialiseContext(element);
+        setTimeout(() => handleResize(element, iFrame), 1);
+    });
 }
 
 main();
