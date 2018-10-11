@@ -1,0 +1,14 @@
+language: node_js
+node_js: stable
+
+script:
+    - npm i
+    - yarn
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: fDLKAnKbldhIItrOYOQNXkdXqrpvsMllF6tkTEMXgeVYKlddVq6D1kT98E2G38qigPCCt9+i7xH5GvdS2kURNMMa4E8Qij/Yqf3cS2UYfyk6Kla60qzsRwtKIO8Lc+SmWAuBBicC+esUH/czM20ZquWbDch8/PxzE8DEkdLtSf7SqOrwckJBhStnb9kSkHyAc1cdjgnrVugp6+Ad7xElNjr3nFuCMhCVTSulBmTjxAWHANCnjKGHMDu2ShFKYQQWNfnRj/JBpQZKLAsqYhgZ5gexDHBeYePaCIBM9kTIiTEd6fryb/xV8uXG6/ZtYcgcthHlpo3rktE0fcJ13zYaUWp+ymQXj+wqXwveN1SLYmYCwl87vOspwZcXLtqYPqNNJjB4eTopciixNH+rGYpxcDPUOt8gG6RM90FIxdoolGKWBBZQEXLt42fPC/EMsdQT4dOGOJkpiaolGO0PluplzIsEaEvdaI+WOOB8v+B05rNcGebZmYzHzjoKWTulaSrNZpfmoks4XLwH0PhH65m5SSsqphnaMYUSbnK5KHWg5izqaTAOgrqAIp95/QEAYeckik80rRp1WBS7QiPMEQzYCrfmJGf8uAJGUyGL846Y1Dy0BA5lNO7uKnMX5Ko32Gv3w/sS+JX/cN4JDZiQg3B3+bmXUVXjBhMXCZR7DbOfaLo=
+  app: regrowth
+  on:
+    repo: Wildhoney/Regrowth
