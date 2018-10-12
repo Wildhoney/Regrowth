@@ -5,3 +5,12 @@
   tasks: 
     - prettier --write '{src,tests,example}/**/*.{js,css}'
     - prettier --write '*.{js,json}'
+
+- name: test/lint
+  tasks:
+      - eslint '{src,example}/**/**.js'
+      - stylelint 'example/**/**.css'
+
+- name: test
+  tasks:
+    - taskfile test/lint
