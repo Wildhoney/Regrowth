@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "ava",
-    "start": "taskfile start"
+    "start": "taskfile start",
+    "format": "taskfile format"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
   "homepage": "https://github.com/Wildhoney/Regrowth#readme",
   "devDependencies": {
     "express": "^4.16.3",
+    "prettier": "^1.14.3",
     "taskfile": "^0.8.5"
   }
 }
