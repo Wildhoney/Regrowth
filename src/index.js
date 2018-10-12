@@ -86,8 +86,7 @@ const setupElement = element => {
     return newFrame;
 };
 
-const isRelevantCSSMediaRule = rule =>
-    rule instanceof CSSMediaRule && rule.conditionText.startsWith('container');
+const isRelevantCSSMediaRule = rule => rule instanceof CSSMediaRule && rule.conditionText.startsWith('container');
 
 const stripContainerPrefix = condition => condition.replace(/^container\s*and/i, '').trim();
 
@@ -101,17 +100,15 @@ const parseStylesheet = link => {
     }));
 };
 
-const main = async () => {
-    await isDocumentReady();
+const main = () =>
+    isDocumentReady().then(() => {
+        const links = findElements('link[rel="stylesheet"]');
+        const tree = links.flatMap(parseStylesheet);
 
-    const links = findElements('link[rel="stylesheet"]');
-    const tree = links.flatMap(parseStylesheet);
-
-    return findElementsFromTree(tree).map(element => {
-        const frame = setupElement(element);
-        setTimeout(() => handleResize(element, frame), 1);
-        return { element, frame };
+        findElementsFromTree(tree).forEach(element => {
+            const frame = setupElement(element);
+            setTimeout(() => handleResize(element, frame), 1);
+        });
     });
-};
 
 main();
