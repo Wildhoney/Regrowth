@@ -6,6 +6,6 @@
         "no-sequences": "off"
     },
     "globals": {
-        "CSSImportRule": true
+        "CSSMediaRule": true
     }
 }

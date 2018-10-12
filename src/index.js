@@ -1,6 +1,6 @@
 const mappings = new WeakMap();
 
-const findElements = (selector, source = window.document) => Array.from(source.querySelectorAll(selector));
+const findElements = (selector, source = document) => Array.from(source.querySelectorAll(selector));
 
 const insertMapping = ({ element, node, cssRule }) => {
     !mappings.has(element) &&
@@ -17,11 +17,19 @@ const insertMapping = ({ element, node, cssRule }) => {
     return element;
 };
 
-const findElementsFromTree = (tree, source = window.document) =>
+const findElementsFromTree = (tree, source = document) =>
     tree.flatMap(node =>
         Array.from(node.cssRules).flatMap(cssRule =>
             findElements(cssRule.selectorText, source).flatMap(element => insertMapping({ element, node, cssRule }))
         )
+    );
+
+const isDocumentReady = () =>
+    new Promise(
+        resolve =>
+            ['interactive', 'complete'].includes(document.readyState)
+                ? resolve()
+                : document.addEventListener('DOMContentLoaded', resolve)
     );
 
 const createFrame = () => {
@@ -79,7 +87,7 @@ const setupElement = element => {
 };
 
 const isRelevantCSSMediaRule = rule =>
-    rule instanceof window.CSSMediaRule && rule.conditionText.startsWith('container');
+    rule instanceof CSSMediaRule && rule.conditionText.startsWith('container');
 
 const stripContainerPrefix = condition => condition.replace(/^container\s*and/i, '').trim();
 
@@ -93,13 +101,16 @@ const parseStylesheet = link => {
     }));
 };
 
-const main = () => {
+const main = async () => {
+    await isDocumentReady();
+
     const links = findElements('link[rel="stylesheet"]');
     const tree = links.flatMap(parseStylesheet);
 
-    findElementsFromTree(tree).forEach(element => {
+    return findElementsFromTree(tree).map(element => {
         const frame = setupElement(element);
         setTimeout(() => handleResize(element, frame), 1);
+        return { element, frame };
     });
 };
 
